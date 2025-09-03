@@ -1,0 +1,37 @@
+# QuantumLeap Validator - Data Processing Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core data processing
+numpy>=1.21.0
+pandas>=1.3.0
+h5py>=3.1.0
+
+# Computer vision and pose estimation
+opencv-python>=4.5.0
+mediapipe>=0.8.10
+
+# Scientific computing
+scipy>=1.7.0
+
+# Visualization (optional)
+matplotlib>=3.4.0
+seaborn>=0.11.0
+
+# Progress bars
+tqdm>=4.62.0
+
+# JSON handling (built-in, but explicit for clarity)
+# json - built-in module
+
+# File compression
+# zipfile - built-in module
+
+# Logging
+# logging - built-in module
+
+# Path handling
+pathlib2>=2.3.0; python_version < "3.4"
+
+# Optional: Advanced pose estimation
+# tensorflow>=2.6.0  # For custom pose models
+# torch>=1.9.0       # For PyTorch-based models
