@@ -3,34 +3,52 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0CB4D686BB36E5558AD478B6 /* QuantumLeapValidatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C3F8AF1EF98F73BD51A1A /* QuantumLeapValidatorApp.swift */; };
 		18D49946B828DE0D3241F12B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1546BCC9D19C7D4C4EFAF91B /* Preview Assets.xcassets */; };
 		460ADE772543652E765B3644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F6622EFCDE983C7E28B5409 /* Assets.xcassets */; };
-		48D62F20C4B481CFD3ED2E14 /* PoseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E1F44890033B96D2D2E66 /* PoseViewController.swift */; };
-		61C93918A5C950F203AA29DA /* PoseOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE43A5C6916A49340D7927B /* PoseOverlayView.swift */; };
+		53D968A21FF46E809A4A4829 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 735050DC7D0D432E68F055B7 /* ZIPFoundation */; };
 		7A0B733FB8EF8C590D586ACC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DEC12B4B3A4562FEFA937 /* ContentView.swift */; };
-		942D8701132787A3921B9740 /* PoseValidationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B4623AECB3D853FC8C1F4F /* PoseValidationView.swift */; };
+		A1B2C3D4E5F6789012345678 /* SmartExerciseDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F67890123456789A /* SmartExerciseDetector.swift */; };
 		AE93424CC8D5E0B1DBC68E3A /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25320A2B922D7F7E7553D30C /* MotionManager.swift */; };
+		BFE26EBF03193963B4C033D1 /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACBB18DBAD13720E046E7CD /* SessionSummaryView.swift */; };
+		C2D3E4F5G67890123456789B /* VoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E4F5G67890123456789BC /* VoiceController.swift */; };
+		D6D91A306694F71CF2AC940C /* IMUValidationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD0C373220F2DDEBB8297D1 /* IMUValidationView.swift */; };
+		E5F6G7H890123456789CDEF0 /* AIVoiceCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */; };
 		F14A158F451989BDE5E9679F /* SessionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC93149F05B4A2D7330CAF2 /* SessionRecorder.swift */; };
+		F7G8H9I901234567890DEF12 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = G8H9I901234567890DEF123 /* AudioSessionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0F6622EFCDE983C7E28B5409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1546BCC9D19C7D4C4EFAF91B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1ACBB18DBAD13720E046E7CD /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
 		25320A2B922D7F7E7553D30C /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		3D2C3F8AF1EF98F73BD51A1A /* QuantumLeapValidatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantumLeapValidatorApp.swift; sourceTree = "<group>"; };
+		5CD0C373220F2DDEBB8297D1 /* IMUValidationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMUValidationView.swift; sourceTree = "<group>"; };
 		6CC93149F05B4A2D7330CAF2 /* SessionRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecorder.swift; sourceTree = "<group>"; };
 		751E70B305629FA789748F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ADE43A5C6916A49340D7927B /* PoseOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseOverlayView.swift; sourceTree = "<group>"; };
-		C8B4623AECB3D853FC8C1F4F /* PoseValidationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseValidationView.swift; sourceTree = "<group>"; };
-		CD4E1F44890033B96D2D2E66 /* PoseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseViewController.swift; sourceTree = "<group>"; };
+		B2C3D4E5F67890123456789A /* SmartExerciseDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartExerciseDetector.swift; sourceTree = "<group>"; };
+		D3E4F5G67890123456789BC /* VoiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceController.swift; sourceTree = "<group>"; };
 		E14DEC12B4B3A4562FEFA937 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F0EF2F8DA7666246976A364E /* QuantumLeapValidator.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = QuantumLeapValidator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0EF2F8DA7666246976A364E /* QuantumLeapValidator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuantumLeapValidator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIVoiceCoach.swift; sourceTree = "<group>"; };
+		G8H9I901234567890DEF123 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ED12D6BEA9FA2732D7DB67F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53D968A21FF46E809A4A4829 /* ZIPFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		9167C980FDA3258C3FA6D443 /* Preview Content */ = {
@@ -54,13 +72,16 @@
 			children = (
 				0F6622EFCDE983C7E28B5409 /* Assets.xcassets */,
 				E14DEC12B4B3A4562FEFA937 /* ContentView.swift */,
+				5CD0C373220F2DDEBB8297D1 /* IMUValidationView.swift */,
 				751E70B305629FA789748F1A /* Info.plist */,
 				25320A2B922D7F7E7553D30C /* MotionManager.swift */,
-				ADE43A5C6916A49340D7927B /* PoseOverlayView.swift */,
-				C8B4623AECB3D853FC8C1F4F /* PoseValidationView.swift */,
-				CD4E1F44890033B96D2D2E66 /* PoseViewController.swift */,
 				3D2C3F8AF1EF98F73BD51A1A /* QuantumLeapValidatorApp.swift */,
 				6CC93149F05B4A2D7330CAF2 /* SessionRecorder.swift */,
+				1ACBB18DBAD13720E046E7CD /* SessionSummaryView.swift */,
+				B2C3D4E5F67890123456789A /* SmartExerciseDetector.swift */,
+				D3E4F5G67890123456789BC /* VoiceController.swift */,
+				F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */,
+				G8H9I901234567890DEF123 /* AudioSessionManager.swift */,
 				9167C980FDA3258C3FA6D443 /* Preview Content */,
 			);
 			path = QuantumLeapValidator;
@@ -83,6 +104,7 @@
 			buildPhases = (
 				0C627A6F6F4C07A91CC6DDBD /* Sources */,
 				29B761949F3B969683487E88 /* Resources */,
+				ED12D6BEA9FA2732D7DB67F9 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -90,6 +112,7 @@
 			);
 			name = QuantumLeapValidator;
 			packageProductDependencies = (
+				735050DC7D0D432E68F055B7 /* ZIPFoundation */,
 			);
 			productName = QuantumLeapValidator;
 			productReference = F0EF2F8DA7666246976A364E /* QuantumLeapValidator.app */;
@@ -102,7 +125,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1640;
 			};
 			buildConfigurationList = 84E169EB4356E978094BB703 /* Build configuration list for PBXProject "QuantumLeapValidator" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -114,7 +137,9 @@
 			);
 			mainGroup = FDCBAFB4CC11AA06F36278D6;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
+			packageReferences = (
+				4BBE2A68222A9DF7AB6CF694 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -141,12 +166,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A0B733FB8EF8C590D586ACC /* ContentView.swift in Sources */,
+				D6D91A306694F71CF2AC940C /* IMUValidationView.swift in Sources */,
 				AE93424CC8D5E0B1DBC68E3A /* MotionManager.swift in Sources */,
-				61C93918A5C950F203AA29DA /* PoseOverlayView.swift in Sources */,
-				942D8701132787A3921B9740 /* PoseValidationView.swift in Sources */,
-				48D62F20C4B481CFD3ED2E14 /* PoseViewController.swift in Sources */,
 				0CB4D686BB36E5558AD478B6 /* QuantumLeapValidatorApp.swift in Sources */,
 				F14A158F451989BDE5E9679F /* SessionRecorder.swift in Sources */,
+				BFE26EBF03193963B4C033D1 /* SessionSummaryView.swift in Sources */,
+				A1B2C3D4E5F6789012345678 /* SmartExerciseDetector.swift in Sources */,
+				C2D3E4F5G67890123456789B /* VoiceController.swift in Sources */,
+				E5F6G7H890123456789CDEF0 /* AIVoiceCoach.swift in Sources */,
+				F7G8H9I901234567890DEF12 /* AudioSessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,8 +233,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 28UE768XAH;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -261,8 +291,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 28UE768XAH;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -328,6 +360,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4BBE2A68222A9DF7AB6CF694 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		735050DC7D0D432E68F055B7 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BBE2A68222A9DF7AB6CF694 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C52F5498C8E94D9972DE7BA5 /* Project object */;
 }

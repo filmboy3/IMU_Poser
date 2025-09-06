@@ -2,7 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedExercise = "Squat"
-    @State private var isRecording = false
+    @State private var showingPoseValidation = false
+    @StateObject private var sessionRecorder = SessionRecorder.shared
     @State private var showingPoseView = false
     
     let exercises = ["Squat", "Bicep Curl", "Lateral Raise", "Push-up"]
@@ -17,7 +18,7 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
                     
-                    Text("Real-time pose validation & data capture")
+                    Text("IMU-based rep counting & data capture")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -61,14 +62,14 @@ struct ContentView: View {
                     }
                     
                     HStack {
-                        Image(systemName: "camera.viewfinder")
-                            .foregroundColor(.purple)
+                        Image(systemName: "waveform.path.ecg")
+                            .foregroundColor(.orange)
                             .font(.title2)
                         
                         VStack(alignment: .leading) {
-                            Text("Vision System")
+                            Text("Rep Counter")
                                 .font(.headline)
-                            Text("Real-time pose detection")
+                            Text("Enhanced algorithm")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -83,6 +84,44 @@ struct ContentView: View {
                 .padding(20)
                 .background(Color(.systemGray6))
                 .cornerRadius(15)
+                .padding(.horizontal, 20)
+                
+                // Session History
+                VStack(alignment: .leading, spacing: 15) {
+                    Text("Recent Sessions")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                    
+                    if sessionRecorder.sessionHistory.isEmpty {
+                        Text("No sessions recorded yet")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                    } else {
+                        ForEach(sessionRecorder.sessionHistory.suffix(5).reversed(), id: \.sessionId) { session in
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(session.exerciseType) Session")
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                    Text("\(session.repCount) reps • \(formatDuration(session.duration))")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                
+                                Spacer()
+                                
+                                Text(formatRelativeTime(session.endTime ?? session.startTime))
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(12)
+                        }
+                    }
+                }
                 .padding(.horizontal, 20)
                 
                 Spacer()
@@ -126,9 +165,21 @@ struct ContentView: View {
             }
             .navigationBarHidden(true)
         }
-        .fullScreenCover(isPresented: $showingPoseView) {
-            PoseValidationView(selectedExercise: selectedExercise)
+        .sheet(isPresented: $showingPoseView) {
+            IMUValidationView(selectedExercise: selectedExercise)
         }
+    }
+    
+    private func formatDuration(_ duration: TimeInterval) -> String {
+        let minutes = Int(duration) / 60
+        let seconds = Int(duration) % 60
+        return String(format: "%d:%02d", minutes, seconds)
+    }
+    
+    private func formatRelativeTime(_ date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .abbreviated
+        return formatter.localizedString(for: date, relativeTo: Date())
     }
 }
 

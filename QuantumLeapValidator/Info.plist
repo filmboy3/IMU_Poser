@@ -18,10 +18,12 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>NSCameraUsageDescription</key>
-	<string>QuantumLeap Validator needs camera access to provide real-time pose feedback and capture training data.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>QuantumLeap Validator needs motion sensor access to capture IMU data for pose analysis.</string>
+	<string>QuantumLeap Validator needs motion sensor access to capture IMU data for rep counting analysis.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>QuantumLeap Validator needs microphone access to listen for voice commands like 'go' and 'stop' to control rep counting.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>QuantumLeap Validator needs speech recognition to understand voice commands for starting and stopping rep counting.</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>
