@@ -26,13 +26,26 @@ from tokenization_pipeline import MultiModalTokenizer, TokenizedSequence
 @dataclass
 class TransformerConfig:
     """Configuration for the Unified Perception Transformer"""
-    vocab_size: int = 1088  # 1024 audio + 64 motion tokens
+    vocab_size: int = 1400  # 256 audio + 256 IMU + special tokens + buffer
     max_seq_len: int = 8192  # ~3-4 minutes of workout context
     d_model: int = 1024  # Embedding dimension
     n_heads: int = 16  # Attention heads
     n_layers: int = 12  # Transformer layers
     d_ff: int = 4096  # Feed-forward dimension
     dropout: float = 0.1
+    
+    # Multimodal token ranges
+    imu_token_start: int = 0
+    imu_token_end: int = 256
+    audio_token_start: int = 1000
+    audio_token_end: int = 1256
+    
+    # Special tokens
+    rep_start_token: int = 1300
+    rep_end_token: int = 1301
+    session_start_token: int = 1302
+    session_end_token: int = 1303
+    coaching_trigger_token: int = 1304
     
 class RotaryPositionalEmbedding(nn.Module):
     """Rotary Position Embedding (RoPE) for better sequence modeling"""
@@ -211,6 +224,108 @@ class UnifiedPerceptionTransformer(nn.Module):
                     break
                     
         return input_ids
+    
+    def predict_rep_and_coaching(self, token_sequence: List[int], context_length: int = 128) -> Dict[str, any]:
+        """
+        Predict rep detection and coaching triggers from multimodal token sequence
+        
+        Args:
+            token_sequence: List of interleaved IMU and audio tokens
+            context_length: Number of recent tokens to consider
+            
+        Returns:
+            Dictionary with rep detection and coaching predictions
+        """
+        self.eval()
+        
+        # Take recent context
+        if len(token_sequence) > context_length:
+            context_tokens = token_sequence[-context_length:]
+        else:
+            context_tokens = token_sequence
+            
+        if not context_tokens:
+            return {"rep_detected": False, "coaching_trigger": False, "confidence": 0.0}
+        
+        # Convert to tensor
+        input_ids = torch.tensor([context_tokens], dtype=torch.long)
+        
+        with torch.no_grad():
+            # Get model predictions
+            logits = self.forward(input_ids)
+            last_logits = logits[0, -1, :]  # Last token predictions
+            
+            # Check for special token predictions
+            rep_start_prob = torch.softmax(last_logits, dim=-1)[self.config.rep_start_token].item()
+            coaching_prob = torch.softmax(last_logits, dim=-1)[self.config.coaching_trigger_token].item()
+            
+            # Analyze token patterns for rep detection
+            imu_tokens = [t for t in context_tokens if self.config.imu_token_start <= t < self.config.imu_token_end]
+            audio_tokens = [t for t in context_tokens if self.config.audio_token_start <= t < self.config.audio_token_end]
+            
+            # Simple pattern-based rep detection (enhanced by transformer predictions)
+            rep_detected = False
+            confidence = 0.0
+            
+            if len(imu_tokens) >= 10:  # Need sufficient IMU context
+                # Look for repetitive patterns in IMU tokens
+                token_variance = np.var(imu_tokens[-10:]) if len(imu_tokens) >= 10 else 0
+                
+                # Combine pattern analysis with transformer prediction
+                pattern_score = min(1.0, token_variance / 100.0)  # Normalize variance
+                transformer_score = rep_start_prob
+                
+                combined_score = 0.7 * pattern_score + 0.3 * transformer_score
+                confidence = combined_score
+                
+                # Threshold for rep detection
+                rep_detected = combined_score > 0.5
+            
+            # Coaching trigger based on model prediction and context
+            coaching_trigger = coaching_prob > 0.3 or (len(audio_tokens) > 5 and coaching_prob > 0.1)
+            
+            return {
+                "rep_detected": rep_detected,
+                "coaching_trigger": coaching_trigger,
+                "confidence": confidence,
+                "rep_probability": rep_start_prob,
+                "coaching_probability": coaching_prob,
+                "imu_token_count": len(imu_tokens),
+                "audio_token_count": len(audio_tokens)
+            }
+    
+    def analyze_multimodal_context(self, imu_tokens: List[int], audio_tokens: List[int]) -> Dict[str, any]:
+        """
+        Analyze multimodal context for workout insights
+        
+        Args:
+            imu_tokens: Recent IMU tokens
+            audio_tokens: Recent audio tokens
+            
+        Returns:
+            Analysis results with workout insights
+        """
+        # Interleave tokens (simple alternating pattern)
+        interleaved = []
+        max_len = max(len(imu_tokens), len(audio_tokens))
+        
+        for i in range(max_len):
+            if i < len(imu_tokens):
+                interleaved.append(imu_tokens[i])
+            if i < len(audio_tokens):
+                interleaved.append(audio_tokens[i] + self.config.audio_token_start)
+        
+        # Get predictions
+        predictions = self.predict_rep_and_coaching(interleaved)
+        
+        # Add multimodal analysis
+        predictions.update({
+            "modality_balance": len(audio_tokens) / (len(imu_tokens) + 1e-6),
+            "total_tokens": len(interleaved),
+            "sequence_complexity": len(set(interleaved)) / len(interleaved) if interleaved else 0
+        })
+        
+        return predictions
 
 class WorkoutDataset(Dataset):
     """Dataset for training the perception transformer"""

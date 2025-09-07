@@ -1,0 +1,142 @@
+{
+  "test_summary": {
+    "total_sessions_tested": 5,
+    "avg_accuracy": 0.2,
+    "min_accuracy": 0.0,
+    "max_accuracy": 1.0,
+    "avg_inference_time_ms": 0.0016560761852551895,
+    "max_inference_time_ms": 0.0050992381816007655,
+    "latency_compliance_rate": 1.0,
+    "test_timestamp": "2025-09-06T19:56:14.767880"
+  },
+  "individual_results": [
+    {
+      "session_id": "session_20250904_184746_442D4272",
+      "ground_truth_reps": 10,
+      "predicted_reps": 0,
+      "accuracy": 0.0,
+      "avg_inference_time_ms": 0.0050992381816007655,
+      "max_inference_time_ms": 0.22125244140625,
+      "total_test_time_s": 0.00027489662170410156,
+      "chunks_processed": 49,
+      "rep_predictions": [
+        0.098572581730831,
+        0.0816494789593154,
+        0.09588054354265389,
+        0.008789376530092175,
+        0.09174735144298518,
+        0.07300391394812937,
+        0.001172160463749994,
+        0.06868911683750341,
+        0.07308555084296922,
+        0.037387306673883895
+      ],
+      "latency_target_met": true
+    },
+    {
+      "session_id": "session_20250904_075342_0EACD0B7",
+      "ground_truth_reps": 0,
+      "predicted_reps": 0,
+      "accuracy": 1.0,
+      "avg_inference_time_ms": 0.000980165269639757,
+      "max_inference_time_ms": 0.0069141387939453125,
+      "total_test_time_s": 2.6941299438476562e-05,
+      "chunks_processed": 18,
+      "rep_predictions": [
+        0.09348119302243034,
+        0.030886729219356524,
+        0.011906938814713731,
+        0.017272675675079608,
+        0.06635606597910362,
+        0.040852174137565735,
+        0.08263970725423822,
+        0.07721214262956692,
+        0.026721330305428406,
+        0.08133964393141174
+      ],
+      "latency_target_met": true
+    },
+    {
+      "session_id": "session_20250906_105137_2E7B0FBD",
+      "ground_truth_reps": 2,
+      "predicted_reps": 0,
+      "accuracy": 0.0,
+      "avg_inference_time_ms": 0.0006580352783203125,
+      "max_inference_time_ms": 0.007867813110351562,
+      "total_test_time_s": 5.412101745605469e-05,
+      "chunks_processed": 50,
+      "rep_predictions": [
+        0.05060462414573418,
+        0.03337523247678238,
+        0.00753572068834758,
+        0.07384353043047655,
+        0.00862013628873245,
+        0.055716792425085586,
+        0.010176732041681846,
+        0.01958539012115138,
+        0.054898371509329275,
+        0.0024461835659140285
+      ],
+      "latency_target_met": true
+    },
+    {
+      "session_id": "session_20250904_184030_63A52DCB",
+      "ground_truth_reps": 8,
+      "predicted_reps": 0,
+      "accuracy": 0.0,
+      "avg_inference_time_ms": 0.0008463859558105469,
+      "max_inference_time_ms": 0.012159347534179688,
+      "total_test_time_s": 5.1021575927734375e-05,
+      "chunks_processed": 40,
+      "rep_predictions": [
+        0.04783290612879118,
+        0.07846915962904852,
+        0.052048093916933914,
+        0.03122720133626862,
+        0.0016901836417835604,
+        0.020650616107604894,
+        0.09439899494147858,
+        0.08063901606147138,
+        0.07245765138337738,
+        0.02058645978410402
+      ],
+      "latency_target_met": true
+    },
+    {
+      "session_id": "session_20250903_162814_24ECED46",
+      "ground_truth_reps": 28,
+      "predicted_reps": 0,
+      "accuracy": 0.0,
+      "avg_inference_time_ms": 0.0006965562409045649,
+      "max_inference_time_ms": 0.007867813110351562,
+      "total_test_time_s": 5.6743621826171875e-05,
+      "chunks_processed": 51,
+      "rep_predictions": [
+        0.0657941732841508,
+        0.08454216097732237,
+        0.06107784896471394,
+        0.0003626737239516009,
+        0.07617930892467573,
+        0.05301710983546973,
+        0.04474247599136988,
+        0.04253243185099172,
+        0.054786232717273946,
+        0.0997994391017515
+      ],
+      "latency_target_met": true
+    }
+  ],
+  "performance_analysis": {
+    "accuracy_distribution": {
+      "excellent_90_plus": 1,
+      "good_70_to_90": 0,
+      "poor_below_70": 4
+    },
+    "latency_analysis": {
+      "under_50ms": 5,
+      "under_100ms": 5,
+      "under_200ms": 5,
+      "over_200ms": 0
+    }
+  }
+}

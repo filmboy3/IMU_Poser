@@ -10,6 +10,7 @@
 		0CB4D686BB36E5558AD478B6 /* QuantumLeapValidatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C3F8AF1EF98F73BD51A1A /* QuantumLeapValidatorApp.swift */; };
 		18D49946B828DE0D3241F12B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1546BCC9D19C7D4C4EFAF91B /* Preview Assets.xcassets */; };
 		460ADE772543652E765B3644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F6622EFCDE983C7E28B5409 /* Assets.xcassets */; };
+		R0R0R0R0567890123456789DEF4 /* rep_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = R1R1R1R1567890123456789ABC4 /* rep_sound.wav */; };
 		53D968A21FF46E809A4A4829 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 735050DC7D0D432E68F055B7 /* ZIPFoundation */; };
 		7A0B733FB8EF8C590D586ACC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DEC12B4B3A4562FEFA937 /* ContentView.swift */; };
 		A1B2C3D4E5F6789012345678 /* SmartExerciseDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F67890123456789A /* SmartExerciseDetector.swift */; };
@@ -20,7 +21,11 @@
 		E5F6G7H890123456789CDEF0 /* AIVoiceCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */; };
 		F14A158F451989BDE5E9679F /* SessionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC93149F05B4A2D7330CAF2 /* SessionRecorder.swift */; };
 		F7G8H9I901234567890DEF12 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = G8H9I901234567890DEF123 /* AudioSessionManager.swift */; };
-/* End PBXBuildFile section */
+		B0B0B0B0567890123456789DEF0 /* UnifiedPerceptionBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = U0U0U0U0567890123456789ABC0 /* UnifiedPerceptionBridge.swift */; };
+		B1B1B1B1567890123456789DEF1 /* UnifiedPerceptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = U1U1U1U1567890123456789ABC1 /* UnifiedPerceptionView.swift */; };
+		B2B2B2B2567890123456789DEF2 /* UnifiedPerceptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = U2U2U2U2567890123456789ABC2 /* UnifiedPerceptionManager.swift */; };
+		S0S0S0S0567890123456789DEF3 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = S1S1S1S1567890123456789ABC3 /* SoundManager.swift */; };
+		/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0F6622EFCDE983C7E28B5409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -37,7 +42,12 @@
 		F0EF2F8DA7666246976A364E /* QuantumLeapValidator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuantumLeapValidator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIVoiceCoach.swift; sourceTree = "<group>"; };
 		G8H9I901234567890DEF123 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		U0U0U0U0567890123456789ABC0 /* UnifiedPerceptionBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedPerceptionBridge.swift; sourceTree = "<group>"; };
+		U1U1U1U1567890123456789ABC1 /* UnifiedPerceptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedPerceptionView.swift; sourceTree = "<group>"; };
+		U2U2U2U2567890123456789ABC2 /* UnifiedPerceptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedPerceptionManager.swift; sourceTree = "<group>"; };
+		S1S1S1S1567890123456789ABC3 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		R1R1R1R1567890123456789ABC4 /* rep_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rep_sound.wav; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		ED12D6BEA9FA2732D7DB67F9 /* Frameworks */ = {
@@ -83,7 +93,12 @@
 				F6G7H890123456789CDEF01 /* AIVoiceCoach.swift */,
 				G8H9I901234567890DEF123 /* AudioSessionManager.swift */,
 				9167C980FDA3258C3FA6D443 /* Preview Content */,
-			);
+							U0U0U0U0567890123456789ABC0 /* UnifiedPerceptionBridge.swift */,
+				U1U1U1U1567890123456789ABC1 /* UnifiedPerceptionView.swift */,
+				U2U2U2U2567890123456789ABC2 /* UnifiedPerceptionManager.swift */,
+				S1S1S1S1567890123456789ABC3 /* SoundManager.swift */,
+				R1R1R1R1567890123456789ABC4 /* rep_sound.wav */,
+);
 			path = QuantumLeapValidator;
 			sourceTree = "<group>";
 		};
@@ -155,6 +170,7 @@
 			files = (
 				460ADE772543652E765B3644 /* Assets.xcassets in Resources */,
 				18D49946B828DE0D3241F12B /* Preview Assets.xcassets in Resources */,
+				R0R0R0R0567890123456789DEF4 /* rep_sound.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +191,11 @@
 				C2D3E4F5G67890123456789B /* VoiceController.swift in Sources */,
 				E5F6G7H890123456789CDEF0 /* AIVoiceCoach.swift in Sources */,
 				F7G8H9I901234567890DEF12 /* AudioSessionManager.swift in Sources */,
-			);
+							B0B0B0B0567890123456789DEF0 /* UnifiedPerceptionBridge.swift in Sources */,
+				B1B1B1B1567890123456789DEF1 /* UnifiedPerceptionView.swift in Sources */,
+				B2B2B2B2567890123456789DEF2 /* UnifiedPerceptionManager.swift in Sources */,
+				S0S0S0S0567890123456789DEF3 /* SoundManager.swift in Sources */,
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */

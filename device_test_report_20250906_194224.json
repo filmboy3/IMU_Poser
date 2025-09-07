@@ -1,0 +1,34 @@
+{
+  "test_summary": {
+    "total_sessions_tested": 5,
+    "avg_accuracy": 0.2,
+    "min_accuracy": 0.0,
+    "max_accuracy": 1.0,
+    "avg_inference_time_ms": 0.0023518622486022405,
+    "max_inference_time_ms": 0.008792293315031091,
+    "latency_compliance_rate": 1.0,
+    "test_timestamp": "2025-09-06T19:42:24.409025"
+  },
+  "individual_results": [
+    {
+      "session_id": "session_20250904_184746_442D4272",
+      "ground_truth_reps": 10,
+      "predicted_reps": 0,
+      "accuracy": 0.0,
+      "avg_inference_time_ms": 0.008792293315031091,
+      "max_inference_time_ms": 0.40602684020996094,
+      "total_test_time_s": 0.0004570484161376953,
+      "chunks_processed": 49,
+      "rep_predictions": [
+        0.08296747134051681,
+        0.09487244059507377,
+        0.0380781626382182,
+        0.01133014589095981,
+        0.09195042792876384,
+        0.07002167120790742,
+        0.014140169488437005,
+        0.08132685827281488,
+        0.07058409645706264,
+        0.05394157585852438
+      ],
+      "latency_target_met": 

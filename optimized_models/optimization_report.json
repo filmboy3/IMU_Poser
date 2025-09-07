@@ -1,0 +1,51 @@
+{
+  "model_quantization": {
+    "error": "Didn't find engine for operation quantized::linear_prepack NoQEngine"
+  },
+  "tokenizer_optimization": {
+    "main_tokenizer": {
+      "original_size_kb": 318.5732421875,
+      "optimized_size_kb": 318.57421875,
+      "size_reduction_percent": -0.00030654253737519884,
+      "output_path": "optimized_models/optimized_tokenizer.pkl"
+    },
+    "audio_tokenizer": {
+      "original_size_kb": 42.1376953125,
+      "optimized_size_kb": 42.1728515625,
+      "size_reduction_percent": -0.08343182924285615,
+      "output_path": "optimized_models/optimized_audio_tokenizer.pkl"
+    }
+  },
+  "mobile_config": {
+    "path": "optimized_models/mobile_config.json",
+    "config": {
+      "model": {
+        "use_quantized": true,
+        "max_sequence_length": 256,
+        "batch_size": 1,
+        "num_attention_heads": 4,
+        "hidden_dim": 256,
+        "num_layers": 4,
+        "dropout": 0.0
+      },
+      "tokenizer": {
+        "vocab_size": 1024,
+        "max_audio_tokens": 64,
+        "max_imu_tokens": 128
+      },
+      "inference": {
+        "enable_caching": true,
+        "use_torch_jit": false,
+        "threading": {
+          "num_threads": 2,
+          "enable_parallel": false
+        }
+      },
+      "memory": {
+        "max_buffer_size": 1024,
+        "enable_gradient_checkpointing": false,
+        "clear_cache_interval": 100
+      }
+    }
+  }
+}

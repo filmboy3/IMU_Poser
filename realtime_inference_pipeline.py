@@ -10,8 +10,10 @@ import numpy as np
 import time
 import threading
 import queue
-from typing import List, Dict, Optional, Tuple, Callable
+import os
 from dataclasses import dataclass
+from typing import Dict, List, Optional, Any, Tuple
+from enum import Enum
 from collections import deque
 import json
 from pathlib import Path
@@ -227,37 +229,43 @@ class RealTimeInferencePipeline:
     """Main real-time inference pipeline orchestrating all components"""
     
     def __init__(self, config: InferenceConfig):
+        """Initialize real-time inference pipeline"""
         self.config = config
-        self.perception_model = OptimizedPerceptionModel(config)
-        self.coaching_llm = GenerativeCoachingLLM("encouraging")
+        self.model = None
+        self.tokenizer = None
+        self.coaching_llm = None
         
-        # Threading components
-        self.input_queue = queue.Queue(maxsize=config.buffer_size)
-        self.output_queue = queue.Queue(maxsize=config.buffer_size)
-        self.inference_thread = None
-        self.coaching_thread = None
-        self.running = False
-        
-        # State tracking
+        # Real-time processing state
+        self.token_buffer = deque(maxlen=512)  # Rolling window of recent tokens
+        self.imu_token_buffer = deque(maxlen=256)  # IMU-specific token buffer
+        self.audio_token_buffer = deque(maxlen=256)  # Audio-specific token buffer
         self.current_rep = 0
-        self.target_reps = 10
         self.session_active = False
+        self.last_rep_time = 0
+        self.session_start_time = None
+        
+        # Performance tracking
         self.performance_stats = {
-            'total_inferences': 0,
-            'avg_latency_ms': 0.0,
-            'max_latency_ms': 0.0,
-            'dropped_frames': 0
+            "total_inferences": 0,
+            "avg_latency_ms": 0.0,
+            "max_latency_ms": 0.0,
+            "dropped_frames": 0,
+            "multimodal_inferences": 0,
+            "rep_detections": 0
         }
         
-    def initialize(self):
-        """Initialize all pipeline components"""
-        print("Initializing real-time inference pipeline...")
+        # Threading for real-time processing
+        self.processing_queue = queue.Queue(maxsize=100)
+        self.result_queue = queue.Queue(maxsize=50)
+        self.processing_thread = None
+        self.stop_processing = threading.Event()
         
-        # Load models
-        self.perception_model.load_model()
-        
-        print("Pipeline initialization complete")
-        
+        print(f"🚀 RealTimeInferencePipeline initialized")
+        print(f"   Model: {config.model_path}")
+        print(f"   Device: {config.device}")
+        print(f"   Quantization: {config.quantization}")
+        print(f"   Multimodal: IMU + Audio token streams")
+
     def start_session(self, target_reps: int = 10) -> CoachingResponse:
         """Start a new workout session"""
         self.session_active = True
@@ -365,6 +373,20 @@ class RealTimeInferencePipeline:
                     )
                     
                     if coaching_response:
+                        print(f"🎯 Coaching: {coaching_response.message}")
+                        
+                        # Store for retrieval
+                        self.latest_coaching = coaching_response
+                        
+                        # Add to inference results for Swift bridge
+                        self.latest_results["coaching_response"] = {
+                            "message": coaching_response.message,
+                            "trigger": coaching_response.trigger.value,
+                            "urgency": coaching_response.urgency,
+                            "audio_cue": coaching_response.audio_cue,
+                            "delay_seconds": coaching_response.delay_seconds
+                        }
+                        
                         try:
                             self.output_queue.put_nowait(coaching_response)
                         except queue.Full:
@@ -398,6 +420,185 @@ class RealTimeInferencePipeline:
     def get_performance_stats(self) -> Dict[str, float]:
         """Get current performance statistics"""
         return self.performance_stats.copy()
+
+class UnifiedPerceptionPipeline:
+    """Unified interface for Swift integration - matches the API expected by UnifiedPerceptionBridge.swift"""
+    
+    def __init__(self, model_path: str, tokenizer_path: str, device: str = "cpu"):
+        """Initialize unified perception pipeline for Swift integration"""
+        self.config = InferenceConfig(
+            model_path=model_path,
+            tokenizer_path=tokenizer_path,
+            device=device,
+            quantization=False  # Disable for iOS compatibility
+        )
+        self.pipeline = RealTimeInferencePipeline(self.config)
+        self.session_active = False
+        
+    def load_model(self):
+        """Load the perception model - called from Swift"""
+        self.pipeline.initialize()
+        
+    def start_session(self, target_reps: int = 10):
+        """Start workout session - called from Swift"""
+        coaching_response = self.pipeline.start_session(target_reps)
+        self.session_active = True
+        return {
+            "status": "started",
+            "message": coaching_response.message,
+            "target_reps": target_reps
+        }
+        
+    def process_imu_data(self, imu_data: dict):
+        """Process IMU data from Swift - expects dict with timestamp, acceleration, etc."""
+        if not self.session_active:
+            return {"error": "Session not active"}
+            
+        # Convert Swift dictionary to SensorData
+        sensor_data = SensorData(
+            timestamp=imu_data.get("timestamp", time.time()),
+            imu_data={
+                "x": imu_data.get("acceleration", [0, 0, 0])[0],
+                "y": imu_data.get("acceleration", [0, 0, 0])[1], 
+                "z": imu_data.get("acceleration", [0, 0, 0])[2]
+            }
+        )
+        
+        # Process the data
+        success = self.pipeline.process_sensor_data(sensor_data)
+        
+        # Get any coaching responses
+        coaching = self.pipeline.get_coaching_response()
+        
+        result = {
+            "processed": success,
+            "rep_detected": False,
+            "coaching_message": None
+        }
+        
+        if coaching:
+            result["coaching_message"] = coaching.message
+            if coaching.trigger.value == "rep_count":
+                result["rep_detected"] = True
+                
+        return result
+        
+    def process_audio_data(self, audio_data: dict):
+        """Process audio data from Swift - expects dict with timestamp, audio_data, sample_rate"""
+        if not self.session_active:
+            return {"error": "Session not active"}
+            
+        try:
+            # Extract audio data
+            timestamp = audio_data.get("timestamp", time.time())
+            audio_samples = np.array(audio_data.get("audio_data", []), dtype=np.float32)
+            sample_rate = audio_data.get("sample_rate", 16000)
+            
+            # Skip processing if audio is too short
+            if len(audio_samples) < 1024:
+                return {
+                    "voice_activity": False,
+                    "audio_coaching": None,
+                    "processed": False
+                }
+            
+            # Basic voice activity detection (simple energy-based)
+            audio_energy = np.mean(audio_samples ** 2)
+            voice_activity = audio_energy > 0.001  # Threshold for voice activity
+            
+            # Initialize audio tokenizer if not already done
+            if not hasattr(self.pipeline, 'audio_tokenizer'):
+                try:
+                    from audio_tokenization_pipeline import AudioTokenizer
+                    self.pipeline.audio_tokenizer = AudioTokenizer(n_clusters=256, sample_rate=int(sample_rate))
+                    
+                    # Try to load pre-trained tokenizer
+                    tokenizer_path = "trained_audio_tokenizer.pkl"
+                    if os.path.exists(tokenizer_path):
+                        self.pipeline.audio_tokenizer.load(tokenizer_path)
+                        print("🎵 Loaded pre-trained audio tokenizer")
+                    else:
+                        print("⚠️ No pre-trained audio tokenizer found - using basic processing")
+                        self.pipeline.audio_tokenizer = None
+                        
+                except Exception as e:
+                    print(f"⚠️ Failed to initialize audio tokenizer: {e}")
+                    self.pipeline.audio_tokenizer = None
+            
+            # Tokenize audio if tokenizer is available
+            audio_tokens = []
+            if hasattr(self.pipeline, 'audio_tokenizer') and self.pipeline.audio_tokenizer is not None:
+                try:
+                    # Resample audio if needed
+                    if sample_rate != self.pipeline.audio_tokenizer.sample_rate:
+                        import librosa
+                        audio_samples = librosa.resample(
+                            audio_samples, 
+                            orig_sr=sample_rate, 
+                            target_sr=self.pipeline.audio_tokenizer.sample_rate
+                        )
+                    
+                    # Tokenize audio
+                    audio_tokens = self.pipeline.audio_tokenizer.tokenize(audio_samples)
+                    
+                except Exception as e:
+                    print(f"⚠️ Audio tokenization failed: {e}")
+                    audio_tokens = []
+            
+            # Generate audio-based coaching if voice activity detected
+            audio_coaching = None
+            if voice_activity and len(audio_tokens) > 0:
+                # Simple audio-based coaching based on token patterns
+                unique_tokens = len(set(audio_tokens))
+                token_diversity = unique_tokens / len(audio_tokens) if audio_tokens else 0
+                
+                if token_diversity > 0.3:
+                    audio_coaching = "Good breathing pattern detected!"
+                elif token_diversity < 0.1:
+                    audio_coaching = "Try to maintain steady breathing"
+            
+            return {
+                "voice_activity": voice_activity,
+                "audio_coaching": audio_coaching,
+                "audio_tokens": audio_tokens[:10] if audio_tokens else [],  # First 10 tokens for debugging
+                "audio_energy": float(audio_energy),
+                "processed": True
+            }
+            
+        except Exception as e:
+            print(f"❌ Audio processing error: {e}")
+            return {
+                "voice_activity": False,
+                "audio_coaching": None,
+                "error": str(e),
+                "processed": False
+            }
+        
+    def get_coaching_response(self):
+        """Get latest coaching response"""
+        coaching = self.pipeline.get_coaching_response()
+        if coaching:
+            return {
+                "message": coaching.message,
+                "trigger": coaching.trigger.value
+            }
+        return None
+        
+    def end_session(self):
+        """End workout session - called from Swift"""
+        if self.session_active:
+            final_coaching = self.pipeline.end_session()
+            self.session_active = False
+            return {
+                "status": "ended",
+                "message": final_coaching.message,
+                "total_reps": self.pipeline.current_rep
+            }
+        return {"status": "not_active"}
+        
+    def get_performance_stats(self):
+        """Get performance statistics - called from Swift"""
+        return self.pipeline.get_performance_stats()
 
 def simulate_imu_stream(duration_seconds: float = 10.0, sample_rate: float = 10.0):
     """Simulate realistic IMU data stream for testing"""

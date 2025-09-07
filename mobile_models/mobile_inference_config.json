@@ -1,0 +1,32 @@
+{
+  "model": {
+    "architecture": "mobile_optimized",
+    "precision": "float32",
+    "batch_size": 1,
+    "enable_caching": true
+  },
+  "inference": {
+    "max_sequence_length": 256,
+    "processing_interval_ms": 100,
+    "memory_limit_mb": 50,
+    "threading": {
+      "max_threads": 2,
+      "enable_parallel": false
+    }
+  },
+  "tokenization": {
+    "audio_buffer_size": 64,
+    "imu_buffer_size": 128,
+    "token_cache_size": 512
+  },
+  "coaching": {
+    "min_interval_seconds": 3.0,
+    "max_messages_per_minute": 10,
+    "enable_audio_cues": true
+  },
+  "performance": {
+    "target_latency_ms": 200,
+    "memory_cleanup_interval": 100,
+    "enable_profiling": false
+  }
+}
